@@ -6,7 +6,7 @@ services:
       - "${MONGODB_PORT:-27017}:27017"
     volumes:
       - type: bind
-        source: ${PROJECT_LOCATION}/${MONGO_NAME:-mongodb}
+        source: "${PROJECT_LOCATION}/${MONGO_NAME:-mongodb}"
         target: /data/db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER:-root}
@@ -37,17 +37,17 @@ services:
     volumes:
       - "/root/.cache/huggingface/:/root/.cache/huggingface/"
       - type: bind
-        source: ${PROJECT_LOCATION}/client_secret.json
+        source: "${PROJECT_LOCATION}/client_secret.json"
         target: /app/client_secret.json
       - type: bind
-        source: ${PROJECT_LOCATION}/storage.json
+        source: "${PROJECT_LOCATION}/storage.json"
         target: /app/storage.json
       - type: bind
-        source: ${PROJECT_LOCATION}/twitter.yaml
+        source: "${PROJECT_LOCATION}/twitter.yaml"
         target: /app/twitter.yaml
       - type: bind
-        source: ${PROJECT_LOCATION}/winners.json
+        source: "${PROJECT_LOCATION}/winners.json"
         target: /app/winners.json
       - type: bind
-        source: ${PROJECT_LOCATION}/cookies.json
+        source: "${PROJECT_LOCATION}/cookies.json"
         target: /app/cookies.json
