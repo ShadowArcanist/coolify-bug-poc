@@ -12,7 +12,9 @@ services:
     ports:
       - "${MONGODB_PORT:-27017}:27017"
     volumes:
-      - ${PROJECT_MONGO_LOCATION}:/data/db
+      - type: bind
+        source: ${PROJECT_MONGO_LOCATION}
+        target: /data/db
     labels:
       - com.centurylinklabs.watchtower.enable=true
   lulu:
