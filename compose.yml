@@ -1,17 +1,4 @@
 services:
-  mongo:
-    restart: always
-    image: mongo:8.0
-    ports:
-      - "${MONGODB_PORT:-27017}:27017"
-    volumes:
-      - "${PROJECT_LOCATION}/${MONGO_NAME:-mongodb}:/data/db"
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER:-root}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD:-pass}
-    labels:
-      - com.centurylinklabs.watchtower.enable=true
-
   lulu:
     depends_on:
       - mongo
@@ -40,3 +27,16 @@ services:
       - "${PROJECT_LOCATION}/twitter.yaml:/app/twitter.yaml"
       - "${PROJECT_LOCATION}/winners.json:/app/winners.json"
       - "${PROJECT_LOCATION}/cookies.json:/app/cookies.json"
+
+  mongo:
+    restart: always
+    image: mongo:8.0
+    ports:
+      - "${MONGODB_PORT:-27017}:27017"
+    volumes:
+      - "${PROJECT_LOCATION}/${MONGO_NAME:-mongodb}:/data/db"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER:-root}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD:-pass}
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
