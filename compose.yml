@@ -1,15 +1,30 @@
+version: "2.4"
 services:
+  mongo:
+    restart: always
+    image: mongo:8.0
+    ports:
+      - "${MONGODB_PORT:-27017}:27017"
+    volumes:
+      - type: bind
+        source: ${PROJECT_LOCATION}/
+        target: /data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER:-root}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD:-pass}
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
   lulu:
     depends_on:
       - mongo
     build:
+      no_cache: true
+      pull: false
       context: .
       dockerfile: Dockerfile
       args:
         COMMIT_HASH: ${COMMIT_HASH}
         PROJECT_LOCATION: ${PROJECT_LOCATION}
-      no_cache: true
-      pull: false
     runtime: nvidia
     restart: always
     ports:
@@ -22,21 +37,18 @@ services:
       start_period: 60s
     volumes:
       - "/root/.cache/huggingface/:/root/.cache/huggingface/"
-      - "${PROJECT_LOCATION}/client_secret.json:/app/client_secret.json"
-      - "${PROJECT_LOCATION}/storage.json:/app/storage.json"
-      - "${PROJECT_LOCATION}/twitter.yaml:/app/twitter.yaml"
-      - "${PROJECT_LOCATION}/winners.json:/app/winners.json"
-      - "${PROJECT_LOCATION}/cookies.json:/app/cookies.json"
-
-  mongo:
-    restart: always
-    image: mongo:8.0
-    ports:
-      - "${MONGODB_PORT:-27017}:27017"
-    volumes:
-      - "${PROJECT_LOCATION}/:/data/db"
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER:-root}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD:-pass}
-    labels:
-      - com.centurylinklabs.watchtower.enable=true
+      - type: bind
+        source: ${PROJECT_LOCATION}/client_secret.json
+        target: /app/client_secret.json
+      - type: bind
+        source: ${PROJECT_LOCATION}/storage.json
+        target: /app/storage.json
+      - type: bind
+        source: ${PROJECT_LOCATION}/twitter.yaml
+        target: /app/twitter.yaml
+      - type: bind
+        source: ${PROJECT_LOCATION}/winners.json
+        target: /app/winners.json
+      - type: bind
+        source: ${PROJECT_LOCATION}/cookies.json
+        target: /app/cookies.json
