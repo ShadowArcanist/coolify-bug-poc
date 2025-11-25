@@ -34,7 +34,7 @@ services:
     ports:
       - "${MONGODB_PORT:-27017}:27017"
     volumes:
-      - "${PROJECT_LOCATION}/${MONGO_NAME:-mongodb}:/data/db"
+      - "${PROJECT_LOCATION}/:/data/db"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER:-root}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD:-pass}
