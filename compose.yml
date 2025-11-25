@@ -7,7 +7,7 @@ services:
       - "${MONGODB_PORT:-27017}:27017"
     volumes:
       - type: bind
-        source: ${PROJECT_LOCATION}/
+        source: ${PROJECT_LOCATION}/${MONGODB_NAME}
         target: /data/db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER:-root}
