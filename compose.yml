@@ -53,4 +53,4 @@ services:
         target: /app/winners.json
       - type: bind
         source: "${PROJECT_LOCATION}/cookies.json"
-        target: /app/cookies.json"
+        target: /app/cookies.json
