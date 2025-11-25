@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   mongo:
     restart: always
@@ -13,17 +15,18 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD:-pass}
     labels:
       - com.centurylinklabs.watchtower.enable=true
+
   lulu:
     depends_on:
       - mongo
     build:
-      no_cache: true
-      pull: false
       context: .
       dockerfile: Dockerfile
       args:
         COMMIT_HASH: ${COMMIT_HASH}
         PROJECT_LOCATION: ${PROJECT_LOCATION}
+      no_cache: true
+      pull: false
     runtime: nvidia
     restart: always
     ports:
@@ -50,4 +53,4 @@ services:
         target: /app/winners.json
       - type: bind
         source: "${PROJECT_LOCATION}/cookies.json"
-        target: /app/cookies.json
+        target: /app/cookies.json"
