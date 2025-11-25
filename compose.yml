@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   mongo:
     restart: always
@@ -7,9 +5,7 @@ services:
     ports:
       - "${MONGODB_PORT:-27017}:27017"
     volumes:
-      - type: bind
-        source: "${PROJECT_LOCATION}/${MONGO_NAME:-mongodb}"
-        target: /data/db
+      - "${PROJECT_LOCATION}/${MONGO_NAME:-mongodb}:/data/db"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER:-root}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD:-pass}
@@ -39,18 +35,8 @@ services:
       start_period: 60s
     volumes:
       - "/root/.cache/huggingface/:/root/.cache/huggingface/"
-      - type: bind
-        source: "${PROJECT_LOCATION}/client_secret.json"
-        target: /app/client_secret.json
-      - type: bind
-        source: "${PROJECT_LOCATION}/storage.json"
-        target: /app/storage.json
-      - type: bind
-        source: "${PROJECT_LOCATION}/twitter.yaml"
-        target: /app/twitter.yaml
-      - type: bind
-        source: "${PROJECT_LOCATION}/winners.json"
-        target: /app/winners.json
-      - type: bind
-        source: "${PROJECT_LOCATION}/cookies.json"
-        target: /app/cookies.json
+      - "${PROJECT_LOCATION}/client_secret.json:/app/client_secret.json"
+      - "${PROJECT_LOCATION}/storage.json:/app/storage.json"
+      - "${PROJECT_LOCATION}/twitter.yaml:/app/twitter.yaml"
+      - "${PROJECT_LOCATION}/winners.json:/app/winners.json"
+      - "${PROJECT_LOCATION}/cookies.json:/app/cookies.json"
