@@ -7,12 +7,11 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER:-root}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD:-pass}
       - MONGO_NAME=${MONGO_NAME:-mongodb}
+      - PROJECT_LOCATION=${PROJECT_LOCATION:-/root}
     ports:
       - "${MONGODB_PORT:-27017}:27017"
     volumes:
-      - type: bind
-        source: ${PROJECT_LOCATION}/${MONGO_NAME}
-        target: /data/db
+      - ${PROJECT_LOCATION}/${MONGO_NAME}:/data/db
     labels:
       - com.centurylinklabs.watchtower.enable=true
   lulu:
