@@ -1,1 +1,2 @@
 # coolify-bug-poc
+test
